@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>足球竞彩 · 信息卡片</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f9fc;
+            color: #1a2e3b;
+            line-height: 1.6;
+            padding: 24px 16px 48px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 1040px;
+            width: 100%;
+        }
+
+        /* 主视觉区域 — 蓝绿渐变网格纹理 */
+        .hero {
+            background: linear-gradient(145deg, #e0f0f5 0%, #c6e3e9 100%);
+            border-radius: 40px;
+            padding: 40px 32px 36px;
+            margin-bottom: 36px;
+            box-shadow: 0 6px 18px rgba(0, 60, 70, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 150, 140, 0.08), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #10434f;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(130deg, #2b7f7a, #1a6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: #1d4a56;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(2px);
+            padding: 14px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin: 4px 0 0;
+        }
+
+        .hero-desc a {
+            color: #0a4b4b;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-weight: 500;
+        }
+
+        .hero-desc a:hover {
+            color: #0d6b65;
+        }
+
+        /* 网格卡片区 — 3列自适应 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 560px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 860px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 28px 22px 24px;
+            box-shadow: 0 4px 12px rgba(30, 80, 85, 0.06);
+            transition: transform 0.2s, box-shadow 0.25s;
+            border: 1px solid #e4f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 90, 85, 0.08);
+            border-color: #b2d8d6;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 18px;
+            border-radius: 18px;
+            background: #d7ece9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #1b6b6b;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0b3b44;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #2b4b55;
+            margin-bottom: 8px;
+            flex: 1;
+        }
+
+        .card-tag {
+            background: #edf7f5;
+            color: #0b5a58;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            width: fit-content;
+            margin-top: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        /* 适合人群段落 + 自然链接 */
+        .audience-section {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 32px 28px;
+            margin-bottom: 36px;
+            box-shadow: 0 4px 14px rgba(0, 50, 55, 0.04);
+            border: 1px solid #d7e9ea;
+        }
+
+        .audience-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0b3f48;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audience-section h2 span {
+            background: #cbe2e2;
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: #0b4f4a;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 24px;
+        }
+
+        @media (max-width: 480px) {
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .audience-item {
+            padding: 8px 0 8px 16px;
+            border-left: 4px solid #97cdcc;
+            color: #1c424b;
+        }
+
+        .audience-item strong {
+            color: #0a4f4f;
+            display: block;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .audience-item p {
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .natural-link-block {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #f0f7f6;
+            border-radius: 42px;
+            font-size: 0.98rem;
+            color: #1a434b;
+            border: 1px solid #cce2e0;
+        }
+
+        .natural-link-block a {
+            color: #0b5f5b;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .natural-link-block a:hover {
+            color: #14857b;
+        }
+
+        /* FAQ 摘要 */
+        .faq-summary {
+            background: #e5f1f0;
+            border-radius: 32px;
+            padding: 28px 28px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #c4dbda;
+        }
+
+        .faq-summary h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0b4045;
+            margin-bottom: 16px;
+        }
+
+        .faq-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #cfe0df;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            color: #144d4d;
+            font-size: 0.98rem;
+            margin-bottom: 4px;
+        }
+
+        .faq-a {
+            font-size: 0.9rem;
+            color: #1f4953;
+            padding-left: 6px;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #62858b;
+            padding: 24px 0 8px;
+            border-top: 1px solid #d4e6e5;
+            margin-top: 16px;
+        }
+
+        /* 辅助 */
+        .text-muted {
+            color: #4a6c74;
+        }
+
+        .mt-2 {
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 主视觉 -->
+    <div class="hero">
+        <div class="hero-grid">
+            <div>
+                <h1 class="hero-title">
+                    绿茵场上的<span>理性视角</span>
+                </h1>
+                <div class="hero-desc">
+                    从赛事数据到竞彩思考，保持观察，沉淀判断。
+                    如果你对<a href="https://ssl-footballbet.com">足球竞彩</a>也有自己的理解，不妨一起梳理思路。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用途卡片 （3张）-->
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>赛事拆解</h3>
+            <p>将比赛信息、对阵风格、近期状态进行梳理，帮助形成更立体的认知视角。</p>
+            <span class="card-tag">信息整合</span>
+        </div>
+        <div class="card">
+            <div class="card-icon">🧠</div>
+            <h3>思维模型</h3>
+            <p>避免单一信息决策，了解常见误区和概率思维，保持独立思考。</p>
+            <span class="card-tag">认知工具</span>
+        </div>
+        <div class="card">
+            <div class="card-icon">📁</div>
+            <h3>记录与复盘</h3>
+            <p>个人笔记式的记录方式，让每场观察都能沉淀为经验。</p>
+            <span class="card-tag">持续积累</span>
+        </div>
+    </div>
+
+    <!-- 适合人群 + 自然链接段落 -->
+    <div class="audience-section">
+        <h2>
+            适合这样的你
+            <span>人群描摹</span>
+        </h2>
+        <div class="audience-grid">
+            <div class="audience-item">
+                <strong>⚽ 日常看球者</strong>
+                <p>习惯在周末关注几场焦点赛事，希望更系统地理清比赛脉络。</p>
+            </div>
+            <div class="audience-item">
+                <strong>📋 数据爱好者</strong>
+                <p>喜欢翻阅历史交锋、球员数据，享受从数字中寻找线索的过程。</p>
+            </div>
+            <div class="audience-item">
+                <strong>🧭 理性探索者</strong>
+                <p>对竞彩感兴趣，但更偏向于了解概率与风险，不盲从情绪。</p>
+            </div>
+            <div class="audience-item">
+                <strong>📝 复盘实践者</strong>
+                <p>愿意记录自己的判断与结果，慢慢优化认知框架。</p>
+            </div>
+        </div>
+
+        <!-- 自然嵌入链接的段落 -->
+        <div class="natural-link-block">
+            <p>
+                无论你是刚开始对竞彩产生好奇，还是已经形成自己的分析习惯，都可以在<a href="https://ssl-footballbet.com">足球竞彩</a>这个方向上持续积累。信息的深度不一定来自复杂模型，更多来自持续的关注与整理。
+            </p>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要 （卡片式）-->
+    <div class="faq-summary">
+        <h3>❓ 常见思路摘要</h3>
+        <div class="faq-item">
+            <div class="faq-q">竞彩分析从哪入手？</div>
+            <div class="faq-a">可以先从基础赛果、球队近期走势、主客场差异等维度开始，不急于下结论。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">如何避免信息过载？</div>
+            <div class="faq-a">锁定少数关键指标，比如控球率、射正次数、伤病情况，逐步构建自己的关注列表。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">数据和直觉哪个更重要？</div>
+            <div class="faq-a">两者可以互补。数据提供背景，直觉可能来自经验，但尽量用数据验证直觉。</div>
+        </div>
+    </div>
+
+    <!-- 温和收尾 -->
+    <div style="background: #f1f9f7; border-radius: 60px; padding: 20px 24px; margin: 16px 0 8px; border: 1px solid #c3dbd9;">
+        <p style="color: #144a4f; font-size: 0.95rem;">
+            ⚡ 保持节奏，理性参与。竞彩是一面镜子，照出我们对比赛的理解，也提醒我们永远在场外保持清醒。
+        </p>
+    </div>
+
+    <div class="footer-note">
+        © 信息卡片 · 仅供参考
+    </div>
+</div>
+</body>
+</html>
