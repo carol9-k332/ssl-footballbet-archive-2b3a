@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>易倍体育 · 简明指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f7f9fb;
+            color: #1d2a3a;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.7;
+            padding: 3rem 1.5rem 4rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 680px;
+            width: 100%;
+        }
+
+        /* header – 极简标识 */
+        .site-id {
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #7c8b9d;
+            border-bottom: 1px solid #dfe5ec;
+            padding-bottom: 1rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .site-id span {
+            font-weight: 500;
+            color: #1d2a3a;
+        }
+
+        /* hero 区域 */
+        .hero {
+            margin-bottom: 2.8rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #0b1826;
+        }
+
+        .hero .sub {
+            font-size: 1.05rem;
+            color: #4a5b6e;
+            max-width: 90%;
+        }
+
+        /* 正文通用 */
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2.4rem 0 0.8rem;
+            color: #0b1826;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.6rem 0 0.4rem;
+            color: #1f3142;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: #253544;
+            font-size: 1rem;
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.04);
+            margin: 2rem 0 1.8rem;
+        }
+
+        .summary-card p {
+            margin-bottom: 0.6rem;
+        }
+
+        .summary-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 亮点网格 */
+        .highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 1.2rem;
+            margin: 1.8rem 0 1rem;
+        }
+
+        .highlight-item {
+            background: transparent;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 1rem;
+        }
+
+        .highlight-item strong {
+            display: block;
+            font-weight: 600;
+            color: #0b1826;
+            margin-bottom: 0.15rem;
+            font-size: 1rem;
+        }
+
+        .highlight-item span {
+            display: block;
+            color: #4a5b6e;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 使用场景 – 轻提醒 */
+        .usage-note {
+            background: #f0f3f8;
+            border-radius: 14px;
+            padding: 1.5rem 1.8rem;
+            margin: 2rem 0 1.8rem;
+        }
+
+        .usage-note p {
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .usage-note .label {
+            font-weight: 600;
+            color: #0b1826;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            margin: 2.6rem 0 2rem;
+        }
+
+        .faq-mini details {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.8rem 0;
+        }
+
+        .faq-mini details:first-of-type {
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .faq-mini summary {
+            font-weight: 500;
+            cursor: pointer;
+            color: #1d2a3a;
+            padding: 0.2rem 0;
+            font-size: 0.98rem;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-mini summary::after {
+            content: "＋";
+            font-size: 1rem;
+            color: #8e9eb2;
+            margin-left: 1rem;
+            transition: transform 0.15s;
+        }
+
+        .faq-mini details[open] summary::after {
+            content: "−";
+        }
+
+        .faq-mini details p {
+            margin: 0.6rem 0 0.2rem;
+            font-size: 0.92rem;
+            color: #3b4d60;
+            padding-right: 1rem;
+        }
+
+        /* 链接样式 – 嵌入句中，不加额外词 */
+        a {
+            color: #0b1826;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1.5px;
+            text-decoration-color: #b7c4d4;
+            transition: all 0.15s;
+        }
+
+        a:hover {
+            text-decoration-color: #1d2a3a;
+            color: #0b1826;
+        }
+
+        /* 可信提示 */
+        .trust-note {
+            font-size: 0.85rem;
+            color: #6a7d92;
+            border-top: 1px solid #dfe5ec;
+            padding-top: 1.8rem;
+            margin-top: 2.8rem;
+            line-height: 1.6;
+        }
+
+        .trust-note a {
+            font-size: 0.85rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 550px) {
+            body {
+                padding: 2rem 1.2rem 3rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .highlights {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .summary-card {
+                padding: 1.3rem 1.4rem;
+            }
+            .usage-note {
+                padding: 1.2rem 1.3rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero .sub {
+                font-size: 0.95rem;
+            }
+            .site-id {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="site-id">
+            <span>易倍体育 · 产品说明</span>
+            <span>简明指南</span>
+        </div>
+
+        <!-- hero -->
+        <div class="hero">
+            <h1>易倍体育<br>使用摘要与访问提醒</h1>
+            <p class="sub">一份面向理性使用者的产品简述，涵盖核心亮点、适用场景与可信访问说明。</p>
+        </div>
+
+        <!-- 摘要卡片 -->
+        <div class="summary-card">
+            <p><strong>什么是易倍体育 · 快速摘要</strong></p>
+            <p>易倍体育是一个整合体育资讯、赛事数据与内容服务的平台，面向对竞技体育有持续关注需求的用户。平台不提供投注、博彩或任何形式的金钱游戏，其定位为信息与体验工具。</p>
+            <p>用户可通过 <a href="https://webs-yibeisport.com">易倍体育</a> 获取赛事动态、深度分析及辅助决策的信息整合。所有内容均基于公开数据与专业编辑，不作为任何形式的投资建议。</p>
+        </div>
+
+        <!-- 亮点：产品特性 -->
+        <h2>核心特点</h2>
+        <div class="highlights">
+            <div class="highlight-item">
+                <strong>赛事数据覆盖</strong>
+                <span>主流联赛与重点杯赛，比分、赛程、统计数据实时更新。</span>
+            </div>
+            <div class="highlight-item">
+                <strong>内容编排清晰</strong>
+                <span>分类明确，支持按赛事、球队、关键词快速检索信息。</span>
+            </div>
+            <div class="highlight-item">
+                <strong>无诱导设计</strong>
+                <span>界面侧重信息展示，无弹窗、无夸张口号、无伪装按钮。</span>
+            </div>
+            <div class="highlight-item">
+                <strong>轻量访问</strong>
+                <span>页面结构简洁，加载流畅，适配主流移动端与桌面设备。</span>
+            </div>
+        </div>
+
+        <!-- 使用建议与场景 -->
+        <h2>使用建议 · 常见场景</h2>
+        <div class="usage-note">
+            <span class="label">场景一 · 赛前信息参考</span>
+            <p>浏览即将开赛的球队近况、伤病名单及历史交锋记录，辅助形成个人判断。建议结合多方信源交叉验证。</p>
+            <span class="label">场景二 · 赛后复盘与数据</span>
+            <p>查看完整技术统计、球员评分与节奏分析，适用于球迷深度讨论或内容创作素材整理。</p>
+            <span class="label">场景三 · 规律性浏览</span>
+            <p>将易倍体育设为信息获取渠道之一，但注意控制单次使用时长，避免信息过载。合理分配注意力。</p>
+        </div>
+
+        <!-- 可信但克制的访问说明 -->
+        <h2>访问说明 · 值得了解的前提</h2>
+        <p>使用任何信息平台前了解其边界是专业习惯。易倍体育的内容团队基于可验证的数据来源进行整理，但不保证绝对完整性与实时性。体育赛事信息具有时效性，重要决策建议通过官方渠道二次确认。</p>
+        <p>平台不收集个人敏感信息，不要求注册即可浏览大部分内容。如果你希望获得更个性化的体验，可自愿创建账户——但请注意保护个人隐私。</p>
+
+        <!-- FAQ 摘要 -->
+        <div class="faq-mini">
+            <h3>常见问题 · 摘要</h3>
+            <details>
+                <summary>易倍体育需要付费吗？</summary>
+                <p>目前主要模块免费开放。未来可能推出增值内容或高级数据服务，但基础信息浏览始终免费，具体以平台公告为准。</p>
+            </details>
+            <details>
+                <summary>数据来源可靠吗？</summary>
+                <p>数据聚合自多家体育数据供应商与联盟官方统计，并经过编辑交叉核对。但体育统计偶有延迟或修正，请理性看待。</p>
+            </details>
+            <details>
+                <summary>移动端体验如何？</summary>
+                <p>响应式设计，手机浏览器直接访问即可。无需下载独立应用，节省设备空间。</p>
+            </details>
+        </div>
+
+        <!-- 信任提示 + 重复嵌入链接（自然） -->
+        <div class="trust-note">
+            <p>本文档仅作产品功能说明，不构成任何形式的使用承诺。请根据自身判断合理使用 <a href="https://webs-yibeisport.com">易倍体育</a> 提供的信息。体育世界充满不确定性，保持独立思考比依赖任何单一来源都更重要。</p>
+            <p style="margin-top: 0.8rem;">© 产品说明页 · 内容仅供示意</p>
+        </div>
+    </div>
+</body>
+</html>
