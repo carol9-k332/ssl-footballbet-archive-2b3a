@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>满冠体育 · 知识库入口</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #f9fafb;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+      color: #1e2a3a;
+      line-height: 1.7;
+      padding: 2.5rem 1rem 4rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 720px;
+      width: 100%;
+    }
+
+    /* header / 目录式锚点导览 */
+    .index-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid #dce3ed;
+    }
+
+    .index-nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #3c5a7d;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .index-nav a:hover {
+      color: #1e3a6b;
+      border-bottom-color: #1e3a6b;
+    }
+
+    /* 段落与标题层级 */
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 2.2rem 0 0.8rem;
+      color: #0f1e33;
+      letter-spacing: -0.2px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 1.6rem 0 0.5rem;
+      color: #1f3a5a;
+    }
+
+    p {
+      margin-bottom: 1.1rem;
+      font-size: 1rem;
+      color: #27364b;
+    }
+
+    .intro-highlight {
+      background: #ffffffd4;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 20, 30, 0.03);
+      border: 1px solid #ecf0f5;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.7rem;
+      margin: 1.2rem 0 1.5rem;
+    }
+
+    .tag {
+      background: #eaedf3;
+      color: #1f3450;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 450;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0 1.8rem;
+    }
+
+    .card-item {
+      background: white;
+      border-radius: 18px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid #e6ecf3;
+      transition: box-shadow 0.2s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+    }
+
+    .card-item:hover {
+      box-shadow: 0 6px 14px rgba(30, 50, 70, 0.05);
+    }
+
+    .card-item .card-label {
+      font-weight: 500;
+      color: #1e3b5e;
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    .card-item p {
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .hint-box {
+      background: #f0f4fc;
+      border-left: 4px solid #2b5797;
+      padding: 1.1rem 1.5rem;
+      border-radius: 12px;
+      margin: 1.8rem 0;
+    }
+
+    .hint-box p {
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem 2rem;
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #dce3ed;
+    }
+
+    .related-links a {
+      color: #274773;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-bottom: 1px dotted #b3c6de;
+    }
+
+    .related-links a:hover {
+      border-bottom-style: solid;
+      color: #0a1e3a;
+    }
+
+    .faq-short {
+      margin-top: 2.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e1e8f0;
+    }
+
+    .faq-short details {
+      margin-bottom: 0.8rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #eaeef5;
+    }
+
+    .faq-short summary {
+      font-weight: 500;
+      color: #193452;
+      cursor: pointer;
+      padding: 0.3rem 0;
+    }
+
+    .faq-short details p {
+      margin: 0.5rem 0 0.2rem 0.6rem;
+      font-size: 0.95rem;
+      color: #2f405a;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #d7e0ea;
+      margin: 2rem 0 1rem;
+    }
+
+    .site-credit {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #5f708b;
+      text-align: center;
+    }
+
+    .inline-link {
+      color: #1d4b7a;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid #b7cde0;
+    }
+
+    .inline-link:hover {
+      border-bottom-color: #1d4b7a;
+    }
+
+    /* 响应式 */
+    @media (max-width: 480px) {
+      body { padding: 1.5rem 0.8rem 3rem; }
+      .intro-highlight { padding: 1.2rem 1rem; }
+      .card-item { padding: 1rem 1rem; }
+      .index-nav { gap: 0.4rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- 目录式锚点导览 (类似知识库目录) -->
+    <nav class="index-nav">
+      <a href="#intro">📖 简介</a>
+      <a href="#features">📌 特点</a>
+      <a href="#reference">🔍 对照</a>
+      <a href="#tips">💡 提示</a>
+      <a href="#faq">❓ 常见问题</a>
+      <a href="#related">📎 相关信息</a>
+    </nav>
+
+    <!-- hero 极简说明 -->
+    <div style="margin-bottom: 1.8rem;">
+      <h1 style="font-weight: 600; font-size: 1.8rem; letter-spacing: -0.3px; color: #0b1b30;">满冠体育 · 知识库入口</h1>
+      <p style="font-size: 1rem; color: #3b4e69;">日常查询、对照参考、延伸阅读——围绕体育信息整理的轻量指引页。</p>
+    </div>
+
+    <!-- 介绍 / 入口说明 -->
+    <section id="intro">
+      <h2>关于满冠体育</h2>
+      <p>「满冠体育」是一个聚焦体育领域的信息聚合站点，内容涉及运动项目、赛事动态、训练常识与体育文化。页面布局偏向实用检索，适合需要快速查阅体育相关背景、名词或数据对照的使用者。</p>
+      <p>本站点并非官方机构或商业平台，而是以个人视角整理的体育知识索引。你可以将 <a href="https://space-manguansport.com" class="inline-link">满冠体育</a> 当作一个起点，从中找到感兴趣的体育主题，再进一步查阅更权威的原始资料。</p>
+    </section>
+
+    <!-- 特点 / 目录感布局 -->
+    <section id="features">
+      <h2>页面特点 · 目录式组织</h2>
+      <div class="card-grid">
+        <div class="card-item">
+          <span class="card-label">📋 分类索引</span>
+          <p>按运动项目、赛事、术语、训练方法等维度划分，页面内嵌锚点导航，方便直接跳转。</p>
+        </div>
+        <div class="card-item">
+          <span class="card-label">📚 对照阅读</span>
+          <p>涉及规则对比、历史沿革、不同地区说法对照，适合延伸查阅。</p>
+        </div>
+        <div class="card-item">
+          <span class="card-label">🧩 轻量卡片</span>
+          <p>每个信息块独立成卡，重点突出，减少长篇大论的阅读压力。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 对照区 / 参考 -->
+    <section id="reference">
+      <h2>常见对照与参考</h2>
+      <p>以下是一些在「满冠体育」中常被查询的对照方向，可作为使用参考：</p>
+      <div class="tag-list">
+        <span class="tag">⚽ 足球术语对照</span>
+        <span class="tag">🏀 篮球规则简史</span>
+        <span class="tag">🎾 网球计分溯源</span>
+        <span class="tag">🏊 游泳泳姿分类</span>
+        <span class="tag">🏃 田径项目索引</span>
+        <span class="tag">🥋 格斗体系一览</span>
+      </div>
+      <p>若你想快速定位某个运动的基础信息，可以直接在 <a href="https://space-manguansport.com" class="inline-link">满冠体育</a> 中根据侧边分类或搜索功能找到对应条目。内容大多附有简要说明与来源标识。</p>
+    </section>
+
+    <!-- 提示区 -->
+    <section id="tips">
+      <div class="hint-box">
+        <p><strong>📎 使用提示</strong></p>
+        <p>• 部分内容为个人整理，建议交叉验证官方规则或最新数据。</p>
+        <p>• 本站链接指向外部资料时，会尽量标注出处，但不对第三方网站的准确性负责。</p>
+        <p>• 若发现信息偏差或链接失效，欢迎通过站内反馈渠道提醒更新。</p>
+      </div>
+    </section>
+
+    <!-- FAQ 摘要 (非完整FAQ，仅展示2-3个代表性问答) -->
+    <section id="faq" class="faq-short">
+      <h2>常见疑问摘要</h2>
+      <details>
+        <summary>满冠体育 主要是面向哪类人群？</summary>
+        <p>适合体育爱好者、初学者、需要快速查阅运动常识的学生或写作者。内容偏重知识索引而非深度教程。</p>
+      </details>
+      <details>
+        <summary>信息多久更新一次？</summary>
+        <p>没有固定更新周期，但会根据赛事变动、规则修订或用户反馈不定期补充修正。</p>
+      </details>
+      <details>
+        <summary>网站是否有移动端适配？</summary>
+        <p>页面采用响应式设计，在手机、平板和桌面浏览器上均可正常阅读与导航。</p>
+      </details>
+    </section>
+
+    <!-- 相关信息区 -->
+    <section id="related">
+      <h2>相关信息与延伸</h2>
+      <p>如果你对体育知识库的搭建或信息整理感兴趣，也可以关注以下方向：体育文献索引、运动数据库、赛事百科。而 <a href="https://space-manguansport.com" class="inline-link">满冠体育</a> 本身也保留了相关链接与参考文章，方便进行延伸阅读。</p>
+      <div class="related-links">
+        <a href="#">⏺ 体育术语汇编</a>
+        <a href="#">⏺ 运动规则简史</a>
+        <a href="#">⏺ 训练方法笔记</a>
+        <a href="#">⏺ 赛事数据参考</a>
+      </div>
+      <p style="font-size: 0.9rem; color: #4b5e7a; margin-top: 0.6rem;">（以上链接为示意性条目，实际内容请以站内页面为准。）</p>
+    </section>
+
+    <hr>
+
+    <div class="site-credit">
+      满冠体育 · 知识向索引 · 内容持续修订中
+    </div>
+
+  </div>
+</body>
+</html>
